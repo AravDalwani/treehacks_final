@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .card {
+            background-color: #fff;
+            width: 80%;
+            max-width: 600px;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        .card:first-child {
+            display: block;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .card p {
+            margin: 1rem 0 0;
+        }
+        .answer {
+            display: none;
+            margin: 1rem 0 0;
+        }
+        .show-answer {
+            background-color: #7f9cf5;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .next-button {
+            background-color: #7f9cf5;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flashcards</h1>
+        {% for card in data %}
+            <div class="card">
+                <h2>{{ card.question }}</h2>
+                <p class="answer">{{ card.answer }}</p>
+                <button class="show-answer">Show Answer</button>
+                <button class="next-button">Next</button>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        const cards = document.querySelectorAll(".card");
+        const showAnswerButtons = document.querySelectorAll(".show-answer");
+        const nextButtons = document.querySelectorAll(".next-button");
+        let currentIndex = 0;
+
+        function showCard(index) {
+            cards.forEach(card => card.style.display = "none");
+            cards[index].style.display = "block";
+            showAnswerButtons[index].style.display = "inline-block";
+        }
+
+        showCard(currentIndex);
+
+        showAnswerButtons.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                const answer = button.previousElementSibling;
+                answer.style.display = "block";
+                button.style.display = "none";
+                nextButtons[index].style.display = "inline-block";
+            });
+        });
+
+        nextButtons.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                currentIndex++;
+                if (currentIndex >= cards.length) {
+                    currentIndex = 0;
+                }
+                showCard(currentIndex);
+            });
+        });
+    </script>
+</body>
+</html>

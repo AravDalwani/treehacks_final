@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #f7f7f7;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .card {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            overflow: scroll;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .card-body {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+        .show-answer {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .answer {
+            display: none;
+            margin: 1rem 0 0;
+        }
+        button {
+            background-color: #7f9cf5;
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Bullet Points</div>
+            <div class="card-body">
+                <ul>
+                    {% for bullet in bullets %}
+                      <li>{{ bullet }}</li>
+                    {% endfor %}
+                  </ul>
+            </div>
+            <div class="show-answer">
+                <button id="show-answer-btn">Show Original</button>
+            </div>
+            <div class="answer" id="answer">{{ text }}</div>
+        </div>
+    </div>
+    <script>
+        const showAnswerBtn = document.getElementById("show-answer-btn");
+        const answerDiv = document.getElementById("answer");
+        const nextBtn = document.getElementById("next-btn");
+
+        showAnswerBtn.addEventListener("click", () => {
+            answerDiv.style.display = "block";
+            showAnswerBtn.style.display = "none";
+            nextBtn.style.display = "block";
+        });
+
+        nextBtn.addEventListener("click", () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
